@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    kubernetes.io/ingress-class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - domain.com
+    secretName: domainSecret-tls
+    - sub.domain.com
+    secretName: subdomainSecret-tls
+  rules:
+  - host: domain.com 
+    http:
+      paths:
+        backend:
+          serviceName: domain-service
+          servicePort: 3100
+  rules:
+  - host: sub.domain.com
+    http:
+      paths:
+        backend:
+          serviceName: subdomain-service
+          servicePort: 3200

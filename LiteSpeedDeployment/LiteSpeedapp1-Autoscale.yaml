@@ -1,0 +1,36 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: WPSp-AS1
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: LS-app1
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resources
+      resource:
+        name: cpu
+        target:
+          type: Utilizatation
+          averageUtilization: 80
+  status:
+     observedGeneration: 2
+    lastScaleTime: <some-time>
+    currentReplicas: 2
+    desiredReplicas:
+    currentMetrics:
+      - type: Resources
+        resources:
+          name: cpu
+          current:
+            averageUtilization: 0
+            averageValue: 0
+      - type: Resources
+        resources:
+          name: memory
+          current:
+            averageUtilization: 0
+            averageValue: 0

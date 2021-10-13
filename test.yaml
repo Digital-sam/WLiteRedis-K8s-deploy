@@ -1,0 +1,41 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: 
+  region: us-west-1
+nodeGroups:
+  - name: dev-trial
+
+
+
+
+redis-configmap.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis
+data:
+  master.conf: 
+    bind 0.0.0.0
+    protected-mode yes
+    port 6379
+
+
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: my-cluster
+  region: us-west-2
+nodeGroup:
+  name: trial-nodes
+  instanceType: t2.medium
+  desiredCapacity: 3
+  minSize: 2
+  maxSize: 4
+  maxPodPerNode: 10
+  volumeType: gp3
+  ssh:
+    allow: true
+    publicKeyPath: "~/.ssh/id_rsa.pub

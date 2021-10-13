@@ -1,0 +1,54 @@
+appVersion: v1
+kind: Service
+metadata:
+  name: subdomain-service
+spec:
+  selector:
+    app: LS-app2
+  ports:
+    - protocol: TCP
+      port: 3200
+      targetPort: 7081
+  type: Ingress
+
+---
+appVersion: app/v1
+kind: Deployment
+metadata:
+  name: LS-app2
+spec:
+   tls:
+    - hosts:
+      - domain.com
+  selector:
+    matchLabels:
+      run: LS-app2
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: LS-app2
+    spec:
+      containers:
+        - name: LShttps2
+          image: litespeedtech/openlitespeed
+          ports:
+            - containerPort: 7081
+          volumeMount:
+            - mountPath: "/var/www/html"
+              name:
+          env:
+            - name:
+              valueFrom:
+                secretKeyRef:
+                  name: litespeed-secret-2
+                  key: 
+            - name:
+              valueFrom:
+                secretKeyRef:
+                  name: litespeed-secret-2
+                  key: 
+      volumes:
+        - name: 
+          persistentVolumeClaim:
+            claimName: 
